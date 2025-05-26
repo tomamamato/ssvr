@@ -19,7 +19,6 @@ from sklearn.naive_bayes import GaussianNB
 file_out='d3.xlsx'
 file_out_in='d4.xlsx'
 kk=[]
-st.write("kk")
 @st.cache_data
 def xd0():
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
