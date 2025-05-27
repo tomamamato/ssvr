@@ -809,7 +809,7 @@ def svrm_a(pre,lis):
     regressor_svr_a.fit(X1, y1)
     return regressor_svr_a,mse,scaler_X,scaler_y
 
-#@st.cache_data
+@st.cache_data
 def svrm_s(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
@@ -886,7 +886,7 @@ def svrm_s(pre,lis):
     regressor_svr_s.fit(X1,y1)
     return regressor_svr_s,mse,scaler_X,scaler_y
 
-#@st.cache_data
+@st.cache_data
 def plssvrm_a(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
@@ -974,7 +974,7 @@ def plssvrm_a(pre,lis):
     regressor_plssvr_a.fit(X1, y1)
     return regressor_plssvr_a,mse,scaler_X,scaler_y,pls.transform
 
-#@st.cache_data
+@st.cache_data
 def plssvrm_s(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
