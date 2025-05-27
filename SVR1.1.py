@@ -1232,7 +1232,7 @@ def xd66():
         if '菌浓g/50mL_变化' in df.columns and f'{df.columns[1]}_变化' in df.columns:
             df['菌体g转化率'] = df['菌浓g/50mL_变化'] / df[f'{df.columns[1]}_变化']
         if '菌浓mL/50mL_变化' in df.columns and f'{df.columns[1]}_变化' in df.columns:
-            df['菌体ml转化率'] = df['菌浓mL/50mL_变化'] / df[f'{df.columns[1]}_变化']
+            df['菌体mL转化率'] = df['菌浓mL/50mL_变化'] / df[f'{df.columns[1]}_变化']
 
         processed_sheets[sheet_name] = df
 
