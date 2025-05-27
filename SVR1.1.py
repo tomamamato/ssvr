@@ -19,7 +19,7 @@ from sklearn.naive_bayes import GaussianNB
 file_out='d3.xlsx'
 file_out_in='d4.xlsx'
 kk=[]
-@st.cache_data
+#@st.cache_data
 def xd0():
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
     xls = pd.ExcelFile(excel_file)
@@ -39,7 +39,7 @@ def xd0():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     return n1
 
-@st.cache_data
+#@st.cache_data
 def xd1():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -70,7 +70,7 @@ def xd1():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“变化”特征")
-@st.cache_data
+#@st.cache_data
 def xd2():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -97,7 +97,7 @@ def xd2():
 
     st.success("已拓展“变化率”特征")
 
-@st.cache_data
+#@st.cache_data
 def xd3():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -124,7 +124,7 @@ def xd3():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“时序”特征")
-@st.cache_data
+#@st.cache_data
 def xd4():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -152,7 +152,7 @@ def xd4():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“多项式”特征")
-@st.cache_data
+#@st.cache_data
 def xd5():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -182,7 +182,7 @@ def xd5():
 
     st.success("已拓展“累积”特征")
 
-@st.cache_data
+#@st.cache_data
 def xd6():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -214,7 +214,7 @@ def xd6():
 
     st.success("已拓展“转化率”特征")
 
-@st.cache_data
+#@st.cache_data
 def xd7():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -243,7 +243,7 @@ def xd7():
 
     st.success("已拓展“生物学”特征")
 
-@st.cache_data
+#@st.cache_data
 def xd8():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -269,7 +269,7 @@ def xd8():
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-@st.cache_data
+#@st.cache_data
 def xd9():
     def merge_sheets(input_file, output_file):
         try:
@@ -307,7 +307,7 @@ def xd9():
 
 
 #计算f值
-@st.cache_data
+#@st.cache_data
 def fscore1_a(pre):
     # 读取Excel文件
     df = pd.read_excel(file_out, engine='openpyxl')
@@ -341,7 +341,7 @@ def fscore1_a(pre):
 
 
     # 读取Excel文件中的所有sheet
-@st.cache_data
+#@st.cache_data
 def fscore_a(pre,lis1):
     EV=0
     lis = [item[0] for item in lis1]
@@ -517,7 +517,7 @@ def fscore_a(pre,lis1):
     return EV
 
 
-@st.cache_data
+#@st.cache_data
 def fscore1_s(pre):
     # 读取Excel文件
     df = pd.read_excel(file_out, engine='openpyxl')
@@ -551,7 +551,7 @@ def fscore1_s(pre):
 
 
     # 读取Excel文件中的所有sheet
-@st.cache_data
+#@st.cache_data
 def fscore_s(pre,lis1):
     EV=0
     lis = [item[0] for item in lis1]
@@ -728,7 +728,7 @@ def fscore_s(pre,lis1):
 
 
 
-@st.cache_data
+#@st.cache_data
 def svrm_a(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
@@ -804,7 +804,7 @@ def svrm_a(pre,lis):
     regressor_svr_a.fit(X1, y1)
     return regressor_svr_a,mse,scaler_X,scaler_y
 
-@st.cache_data
+#@st.cache_data
 def svrm_s(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
@@ -880,7 +880,7 @@ def svrm_s(pre,lis):
     regressor_svr_s.fit(X1,y1)
     return regressor_svr_s,mse,scaler_X,scaler_y
 
-@st.cache_data
+#@st.cache_data
 def plssvrm_a(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
@@ -967,7 +967,7 @@ def plssvrm_a(pre,lis):
     regressor_plssvr_a.fit(X1, y1)
     return regressor_plssvr_a,mse,scaler_X,scaler_y,pls.transform
 
-@st.cache_data
+#@st.cache_data
 def plssvrm_s(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
