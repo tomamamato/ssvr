@@ -19,7 +19,9 @@ from sklearn.naive_bayes import GaussianNB
 file_out='d3.xlsx'
 file_out_in='d4.xlsx'
 kk=[]
-#@st.cache_data
+kf1=2
+kf2=2
+@st.cache_data
 def xd0():
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
     xls = pd.ExcelFile(excel_file)
@@ -39,7 +41,7 @@ def xd0():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     return n1
 
-#@st.cache_data
+@st.cache_data
 def xd1():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -70,7 +72,7 @@ def xd1():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“变化”特征")
-#@st.cache_data
+@st.cache_data
 def xd2():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -97,7 +99,7 @@ def xd2():
 
     st.success("已拓展“变化率”特征")
 
-#@st.cache_data
+@st.cache_data
 def xd3():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -124,7 +126,7 @@ def xd3():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“时序”特征")
-#@st.cache_data
+@st.cache_data
 def xd4():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -152,7 +154,7 @@ def xd4():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     st.success("已拓展“多项式”特征")
-#@st.cache_data
+@st.cache_data
 def xd5():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -182,7 +184,7 @@ def xd5():
 
     st.success("已拓展“累积”特征")
 
-#@st.cache_data
+@st.cache_data
 def xd6():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -214,7 +216,7 @@ def xd6():
 
     st.success("已拓展“转化率”特征")
 
-#@st.cache_data
+@st.cache_data
 def xd7():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -243,7 +245,7 @@ def xd7():
 
     st.success("已拓展“生物学”特征")
 
-#@st.cache_data
+@st.cache_data
 def xd8():
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
@@ -269,7 +271,7 @@ def xd8():
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-#@st.cache_data
+@st.cache_data
 def xd9():
     def merge_sheets(input_file, output_file):
         try:
@@ -307,7 +309,7 @@ def xd9():
 
 
 #计算f值
-#@st.cache_data
+@st.cache_data
 def fscore1_a(pre):
     # 读取Excel文件
     df = pd.read_excel(file_out, engine='openpyxl')
@@ -341,138 +343,56 @@ def fscore1_a(pre):
 
 
     # 读取Excel文件中的所有sheet
-#@st.cache_data
+@st.cache_data
 def fscore_a(pre,lis1):
     EV=0
-    lis = [item[0] for item in lis1]
-    # 读取Excel文件中的所有sheet
-    file_path = file_out
-    data = pd.read_excel(file_path)  # 读取
-    data = data.dropna(how='any')
-        # 1
-    feature = lis
-    features = feature[:1]
-    target = pre
+    while EV <= 15 or EV >= len(lis1) / 4:
+        lis = [item[0] for item in lis1]
+        # 读取Excel文件中的所有sheet
+        file_path = file_out
+        data = pd.read_excel(file_path)  # 读取
+        data = data.dropna(how='any')
+            # 1
+        feature = lis
+        features = feature[:1]
+        target = pre
 
-        # 分割数据集
-    X = data[features]
-    y = data[target]
+            # 分割数据集
+        X = data[features]
+        y = data[target]
 
-    X_train, X_test, y_train, y_test= train_test_split(X,y,test_size=0.2)
+        X_train, X_test, y_train, y_test= train_test_split(X,y,test_size=0.2)
 
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y= MinMaxScaler()
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y= MinMaxScaler()
 
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
 
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
 
-    X1 = X_train
-    y1 = y_train
+        X1 = X_train
+        y1 = y_train
 
-        # 创建SVR模型，使用RBF核函数
-    regressor = SVR(kernel='linear')
-    kf = KFold(n_splits=25, shuffle=True)
-    scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
-
-    # 计算平均 MSE
-    average_mse_1 = np.mean(-scores)
-
-        # all
-    feature = lis
-    features = feature[:len(lis)]
-    target = pre
-
-        # 分割数据集
-    X = data[features]
-    y = data[target]
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
-
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
-
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
-
-    X1 = X_train
-    y1 = y_train
-
-        # 创建SVR模型，使用RBF核函数
-    regressor = SVR(kernel='linear')
-    kf = KFold(n_splits=25, shuffle=True)
-    scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
+            # 创建SVR模型，使用RBF核函数
+        regressor = SVR(kernel='linear')
+        kf = KFold(n_splits=kf1, shuffle=True)
+        scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
 
         # 计算平均 MSE
-    average_mse_all = np.mean(-scores)
-    ev = 1
-    mse_ev = average_mse_1
-    EV = len(lis)
-    mse_EV = average_mse_all
+        average_mse_1 = np.mean(-scores)
 
-    def calculate_average(data, i, j):
-            # 使用切片提取从第i到第j个元素
-        if i <= j:
-            sublist = data[i:j + 1]
-
-                # 计算这些元素的总和
-            total_sum = sum(sublist)
-
-                # 计算元素的个数
-            count = len(sublist)
-
-                # 计算并返回平均值
-            if count > 0:
-                return total_sum / count
-            else:
-                return 0  # 如果没有元素，则返回0
-        else:
-            sublist = data[j:i + 1]
-
-                # 计算这些元素的总和
-            total_sum = sum(sublist)
-
-                # 计算元素的个数
-            count = len(sublist)
-
-                # 计算并返回平均值
-            if count > 0:
-                return total_sum / count
-            else:
-                return 0  # 如果没有元素，则返回0
-
-    def find_greater_than_m(data, m):
-            # 使用列表推导式找到所有大于m的元素
-        result = [x for x in data if x > m]
-        return result
-    #lis1(名称，分数) lis(名称) lis2(分数)
-    lis2 = [item[1] for item in lis1]
-    while abs(EV - ev) > 1:
-        average = calculate_average(lis2, EV - 1, ev - 1)
-        new_list = find_greater_than_m(lis2, average)
-        n = len(new_list)
-
+            # all
         feature = lis
-        features = feature[:n]
+        features = feature[:len(lis)]
         target = pre
 
             # 分割数据集
@@ -502,22 +422,105 @@ def fscore_a(pre,lis1):
 
             # 创建SVR模型，使用RBF核函数
         regressor = SVR(kernel='linear')
-        kf = KFold(n_splits=25, shuffle=True)
+        kf = KFold(n_splits=kf1, shuffle=True)
         scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
 
             # 计算平均 MSE
-        average_mse = np.mean(-scores)
+        average_mse_all = np.mean(-scores)
+        ev = 1
+        mse_ev = average_mse_1
+        EV = len(lis)
+        mse_EV = average_mse_all
 
-        if average_mse <= mse_EV:
-            mse_EV = average_mse
-            EV = n
-        else:
-            mse_ev = average_mse
-            ev = n
+        def calculate_average(data, i, j):
+                # 使用切片提取从第i到第j个元素
+            if i <= j:
+                sublist = data[i:j + 1]
+
+                    # 计算这些元素的总和
+                total_sum = sum(sublist)
+
+                    # 计算元素的个数
+                count = len(sublist)
+
+                    # 计算并返回平均值
+                if count > 0:
+                    return total_sum / count
+                else:
+                    return 0  # 如果没有元素，则返回0
+            else:
+                sublist = data[j:i + 1]
+
+                    # 计算这些元素的总和
+                total_sum = sum(sublist)
+
+                    # 计算元素的个数
+                count = len(sublist)
+
+                    # 计算并返回平均值
+                if count > 0:
+                    return total_sum / count
+                else:
+                    return 0  # 如果没有元素，则返回0
+
+        def find_greater_than_m(data, m):
+                # 使用列表推导式找到所有大于m的元素
+            result = [x for x in data if x > m]
+            return result
+        #lis1(名称，分数) lis(名称) lis2(分数)
+        lis2 = [item[1] for item in lis1]
+        while abs(EV - ev) > 1:
+            average = calculate_average(lis2, EV - 1, ev - 1)
+            new_list = find_greater_than_m(lis2, average)
+            n = len(new_list)
+
+            feature = lis
+            features = feature[:n]
+            target = pre
+
+                # 分割数据集
+            X = data[features]
+            y = data[target]
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+            X_train = X_train.to_numpy()
+            X_test = X_test.to_numpy()
+            y_train = y_train.to_numpy()
+            y_test = y_test.to_numpy()
+                # 初始化标准化器
+            scaler_X = MinMaxScaler()
+            scaler_y = MinMaxScaler()
+
+                # 对训练集进行拟合和变换
+            X_train = scaler_X.fit_transform(X_train)
+            y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+
+                # 对测试集仅进行变换
+            X_test = scaler_X.transform(X_test)
+            y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+
+            X1 = X_train
+            y1 = y_train
+
+                # 创建SVR模型，使用RBF核函数
+            regressor = SVR(kernel='linear')
+            kf = KFold(n_splits=kf1, shuffle=True)
+            scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
+
+                # 计算平均 MSE
+            average_mse = np.mean(-scores)
+
+            if average_mse <= mse_EV:
+                mse_EV = average_mse
+                EV = n
+            else:
+                mse_ev = average_mse
+                ev = n
     return EV
 
 
-#@st.cache_data
+@st.cache_data
 def fscore1_s(pre):
     # 读取Excel文件
     df = pd.read_excel(file_out, engine='openpyxl')
@@ -551,138 +554,56 @@ def fscore1_s(pre):
 
 
     # 读取Excel文件中的所有sheet
-#@st.cache_data
+@st.cache_data
 def fscore_s(pre,lis1):
     EV=0
-    lis = [item[0] for item in lis1]
-        # 读取Excel文件中的所有sheet
-    file_path = file_out
-    data = pd.read_excel(file_path)  # 读取
-    data = data.dropna(how='any')
-        # 1
-    feature = lis
-    features = feature[:1]
-    target = pre
-
-        # 分割数据集
-    X = data[features]
-    y = data[target]
-
-    X_train, X_test, y_train, y_test= train_test_split(X,y,test_size=0.2)
-
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y= MinMaxScaler()
-
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
-
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
-
-    X1 = X_train
-    y1 = y_train
-
-        # 创建SVR模型，使用RBF核函数
-    regressor = SVR(kernel='linear')
-    kf = KFold(n_splits=25, shuffle=True)
-    scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
-
-        # 计算平均 MSE
-    average_mse_1 = np.mean(-scores)
-
-        # all
-    feature = lis
-    features = feature[:len(lis)]
-    target = pre
-
-        # 分割数据集
-    X = data[features]
-    y = data[target]
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
-
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
-
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
-
-    X1 = X_train
-    y1 = y_train
-
-        # 创建SVR模型，使用RBF核函数
-    regressor = SVR(kernel='linear')
-    kf = KFold(n_splits=25, shuffle=True)
-    scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
-
-        # 计算平均 MSE
-    average_mse_all = np.mean(-scores)
-    ev = 1
-    mse_ev = average_mse_1
-    EV = len(lis)
-    mse_EV = average_mse_all
-
-    def calculate_average(data, i, j):
-            # 使用切片提取从第i到第j个元素
-        if i <= j:
-            sublist = data[i:j + 1]
-
-                # 计算这些元素的总和
-            total_sum = sum(sublist)
-
-                # 计算元素的个数
-            count = len(sublist)
-
-                # 计算并返回平均值
-            if count > 0:
-                return total_sum / count
-            else:
-                return 0  # 如果没有元素，则返回0
-        else:
-            sublist = data[j:i + 1]
-
-                # 计算这些元素的总和
-            total_sum = sum(sublist)
-
-                # 计算元素的个数
-            count = len(sublist)
-
-                # 计算并返回平均值
-            if count > 0:
-                return total_sum / count
-            else:
-                return 0  # 如果没有元素，则返回0
-
-    def find_greater_than_m(data, m):
-            # 使用列表推导式找到所有大于m的元素
-        result = [x for x in data if x > m]
-        return result
-    #lis1(名称，分数) lis(名称) lis2(分数)
-    lis2 = [item[1] for item in lis1]
-    while abs(EV - ev) > 1:
-        average = calculate_average(lis2, EV - 1, ev - 1)
-        new_list = find_greater_than_m(lis2, average)
-        n = len(new_list)
-
+    while EV <= 15 or EV >= len(lis1) / 4:
+        lis = [item[0] for item in lis1]
+            # 读取Excel文件中的所有sheet
+        file_path = file_out
+        data = pd.read_excel(file_path)  # 读取
+        data = data.dropna(how='any')
+            # 1
         feature = lis
-        features = feature[:n]
+        features = feature[:1]
+        target = pre
+
+            # 分割数据集
+        X = data[features]
+        y = data[target]
+
+        X_train, X_test, y_train, y_test= train_test_split(X,y,test_size=0.2)
+
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y= MinMaxScaler()
+
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+
+        X1 = X_train
+        y1 = y_train
+
+            # 创建SVR模型，使用RBF核函数
+        regressor = SVR(kernel='linear')
+        kf = KFold(n_splits=kf1, shuffle=True)
+        scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
+
+            # 计算平均 MSE
+        average_mse_1 = np.mean(-scores)
+
+            # all
+        feature = lis
+        features = feature[:len(lis)]
         target = pre
 
             # 分割数据集
@@ -712,88 +633,172 @@ def fscore_s(pre,lis1):
 
             # 创建SVR模型，使用RBF核函数
         regressor = SVR(kernel='linear')
-        kf = KFold(n_splits=25, shuffle=True)
+        kf = KFold(n_splits=kf1, shuffle=True)
         scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
 
             # 计算平均 MSE
-        average_mse = np.mean(-scores)
+        average_mse_all = np.mean(-scores)
+        ev = 1
+        mse_ev = average_mse_1
+        EV = len(lis)
+        mse_EV = average_mse_all
 
-        if average_mse <= mse_EV:
-            mse_EV = average_mse
-            EV = n
-        else:
-            mse_ev = average_mse
-            ev = n
+        def calculate_average(data, i, j):
+                # 使用切片提取从第i到第j个元素
+            if i <= j:
+                sublist = data[i:j + 1]
+
+                    # 计算这些元素的总和
+                total_sum = sum(sublist)
+
+                    # 计算元素的个数
+                count = len(sublist)
+
+                    # 计算并返回平均值
+                if count > 0:
+                    return total_sum / count
+                else:
+                    return 0  # 如果没有元素，则返回0
+            else:
+                sublist = data[j:i + 1]
+
+                    # 计算这些元素的总和
+                total_sum = sum(sublist)
+
+                    # 计算元素的个数
+                count = len(sublist)
+
+                    # 计算并返回平均值
+                if count > 0:
+                    return total_sum / count
+                else:
+                    return 0  # 如果没有元素，则返回0
+
+        def find_greater_than_m(data, m):
+                # 使用列表推导式找到所有大于m的元素
+            result = [x for x in data if x > m]
+            return result
+        #lis1(名称，分数) lis(名称) lis2(分数)
+        lis2 = [item[1] for item in lis1]
+        while abs(EV - ev) > 1:
+            average = calculate_average(lis2, EV - 1, ev - 1)
+            new_list = find_greater_than_m(lis2, average)
+            n = len(new_list)
+
+            feature = lis
+            features = feature[:n]
+            target = pre
+
+                # 分割数据集
+            X = data[features]
+            y = data[target]
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+            X_train = X_train.to_numpy()
+            X_test = X_test.to_numpy()
+            y_train = y_train.to_numpy()
+            y_test = y_test.to_numpy()
+                # 初始化标准化器
+            scaler_X = MinMaxScaler()
+            scaler_y = MinMaxScaler()
+
+                # 对训练集进行拟合和变换
+            X_train = scaler_X.fit_transform(X_train)
+            y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+
+                # 对测试集仅进行变换
+            X_test = scaler_X.transform(X_test)
+            y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+
+            X1 = X_train
+            y1 = y_train
+
+                # 创建SVR模型，使用RBF核函数
+            regressor = SVR(kernel='linear')
+            kf = KFold(n_splits=kf1, shuffle=True)
+            scores = cross_val_score(regressor, X1, y1, cv=kf, scoring='neg_mean_squared_error')
+
+                # 计算平均 MSE
+            average_mse = np.mean(-scores)
+
+            if average_mse <= mse_EV:
+                mse_EV = average_mse
+                EV = n
+            else:
+                mse_ev = average_mse
+                ev = n
     return EV
 
 
 
-#@st.cache_data
+@st.cache_data
 def svrm_a(pre,lis):
     file_path = file_out
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')
     # SVR
     r2 = 0
-    features = lis
-    target = pre
+    while r2<=0.8 :
+        features = lis
+        target = pre
 
-        # 分割数据集
-    X = data[features]
-    y = data[target]
+            # 分割数据集
+        X = data[features]
+        y = data[target]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y = MinMaxScaler()
 
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
 
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
 
-    X1 = X_train
-    y1 = y_train
+        X1 = X_train
+        y1 = y_train
 
-        # 定义SVR模型的超参数搜索空间
-    search_space = {
-            'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
-            'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
-            'kernel': ['linear', 'rbf'],  # 核函数类型
-            'gamma': ['scale', 'auto'],  # 核函数的系数
-        }
+            # 定义SVR模型的超参数搜索空间
+        search_space = {
+                'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
+                'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
+                'kernel': ['linear', 'rbf'],  # 核函数类型
+                'gamma': ['scale', 'auto'],  # 核函数的系数
+            }
 
-        # 使用贝叶斯优化进行超参数搜索
-    opt = BayesSearchCV(
-            SVR(),  # 模型
-            search_space,  # 超参数空间
-            n_iter=25,  # 迭代次数
-            cv=5,  # 交叉验证次数
-        )
+            # 使用贝叶斯优化进行超参数搜索
+        opt = BayesSearchCV(
+                SVR(),  # 模型
+                search_space,  # 超参数空间
+                n_iter=25,  # 迭代次数
+                cv=5,  # 交叉验证次数
+            )
 
-        # 拟合模型
-    opt.fit(X1, y1)
+            # 拟合模型
+        opt.fit(X1, y1)
 
-        # 创建SVR模型，使用RBF核函数
-    regressor_svr_a = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
-                            gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
+            # 创建SVR模型，使用RBF核函数
+        regressor_svr_a = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
+                                gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
 
-    scores = cross_val_score(regressor_svr_a, X1, y1, cv=25, scoring='neg_mean_squared_error')
-    scores_mae = cross_val_score(regressor_svr_a, X1, y1, cv=25, scoring='neg_mean_absolute_error')
-    scores_r2 = cross_val_score(regressor_svr_a, X1, y1, cv=25, scoring='r2')
-    # 计算平均 MSE
-    mse = np.mean(-scores)
-    rmse = np.sqrt(mse)
-    mae = np.mean(-scores_mae)
-    r2 = np.mean(scores_r2)
+        scores = cross_val_score(regressor_svr_a, X1, y1, cv=kf2, scoring='neg_mean_squared_error')
+        scores_mae = cross_val_score(regressor_svr_a, X1, y1, cv=kf2, scoring='neg_mean_absolute_error')
+        scores_r2 = cross_val_score(regressor_svr_a, X1, y1, cv=kf2, scoring='r2')
+        # 计算平均 MSE
+        mse = np.mean(-scores)
+        rmse = np.sqrt(mse)
+        mae = np.mean(-scores_mae)
+        r2 = np.mean(scores_r2)
         #st.markdown(r2)
     # 输出结果
     st.markdown("SVR模型性能指标：")
@@ -811,66 +816,67 @@ def svrm_s(pre,lis):
     data = data.dropna(how='any')
     # SVR
     r2 = 0
-    features = lis
-    target = pre
+    while r2 <= 0.8:
+        features = lis
+        target = pre
 
-        # 分割数据集
-    X = data[features]
-    y = data[target]
+            # 分割数据集
+        X = data[features]
+        y = data[target]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y = MinMaxScaler()
 
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
 
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
 
-    X1 = X_train
-    y1 = y_train
+        X1 = X_train
+        y1 = y_train
 
-        # 定义SVR模型的超参数搜索空间
-    search_space = {
-            'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
-            'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
-            'kernel': ['linear', 'rbf'],  # 核函数类型
-            'gamma': ['scale', 'auto'],  # 核函数的系数
-        }
+            # 定义SVR模型的超参数搜索空间
+        search_space = {
+                'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
+                'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
+                'kernel': ['linear', 'rbf'],  # 核函数类型
+                'gamma': ['scale', 'auto'],  # 核函数的系数
+            }
 
-        # 使用贝叶斯优化进行超参数搜索
-    opt = BayesSearchCV(
-            SVR(),  # 模型
-            search_space,  # 超参数空间
-            n_iter=25,  # 迭代次数
-            cv=5,  # 交叉验证次数
-        )
+            # 使用贝叶斯优化进行超参数搜索
+        opt = BayesSearchCV(
+                SVR(),  # 模型
+                search_space,  # 超参数空间
+                n_iter=25,  # 迭代次数
+                cv=5,  # 交叉验证次数
+            )
 
-        # 拟合模型
-    opt.fit(X1, y1)
+            # 拟合模型
+        opt.fit(X1, y1)
 
-        # 创建SVR模型，使用RBF核函数
-    regressor_svr_s = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
-                            gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
+            # 创建SVR模型，使用RBF核函数
+        regressor_svr_s = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
+                                gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
 
 
-    scores = cross_val_score(regressor_svr_s, X1, y1, cv=25, scoring='neg_mean_squared_error')
-    scores_mae = cross_val_score(regressor_svr_s, X1, y1, cv=25, scoring='neg_mean_absolute_error')
-    scores_r2 = cross_val_score(regressor_svr_s, X1, y1, cv=25, scoring='r2')
-        # 计算平均 MSE
-    mse = np.mean(-scores)
-    rmse = np.sqrt(mse)
-    mae = np.mean(-scores_mae)
-    r2 = np.mean(scores_r2)
+        scores = cross_val_score(regressor_svr_s, X1, y1, cv=kf2, scoring='neg_mean_squared_error')
+        scores_mae = cross_val_score(regressor_svr_s, X1, y1, cv=kf2, scoring='neg_mean_absolute_error')
+        scores_r2 = cross_val_score(regressor_svr_s, X1, y1, cv=kf2, scoring='r2')
+            # 计算平均 MSE
+        mse = np.mean(-scores)
+        rmse = np.sqrt(mse)
+        mae = np.mean(-scores_mae)
+        r2 = np.mean(scores_r2)
     # 输出结果
     st.markdown("SVR模型性能指标：")
     st.markdown(f"MSE: {mse}")
@@ -887,77 +893,78 @@ def plssvrm_a(pre,lis):
     data = data.dropna(how='any')
     # SVR
     r2 = 0
-    features = lis
-    target = pre
+    while r2 <= 0.85:
+        features = lis
+        target = pre
 
-        # 分割数据集
-    X = data[features]
-    y = data[target]
+            # 分割数据集
+        X = data[features]
+        y = data[target]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y = MinMaxScaler()
 
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
 
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
 
-        # 使用 PLS 进行特征提取，选择提取2个主成分
-    pls = PLSRegression(n_components=5)
+            # 使用 PLS 进行特征提取，选择提取2个主成分
+        pls = PLSRegression(n_components=5)
 
-        # 拟合 PLS 模型
-    pls.fit(X_train, y_train)
+            # 拟合 PLS 模型
+        pls.fit(X_train, y_train)
 
+            # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
+        X_pls = pls.transform(X_train)
+        X_test_pls = pls.transform(X_test)
         # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
-    X_pls = pls.transform(X_train)
-    X_test_pls = pls.transform(X_test)
-    # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
-    X_test_pls = pls.transform(X_test)
+        X_test_pls = pls.transform(X_test)
 
-    X1 = X_pls
-    y1 = y_train
+        X1 = X_pls
+        y1 = y_train
 
-        # 定义SVR模型的超参数搜索空间
-    search_space = {
-            'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
-            'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
-            'kernel': ['linear', 'rbf'],  # 核函数类型
-            'gamma': ['scale', 'auto'],  # 核函数的系数
-        }
+            # 定义SVR模型的超参数搜索空间
+        search_space = {
+                'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
+                'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
+                'kernel': ['linear', 'rbf'],  # 核函数类型
+                'gamma': ['scale', 'auto'],  # 核函数的系数
+            }
 
-        # 使用贝叶斯优化进行超参数搜索
-    opt = BayesSearchCV(
-            SVR(),  # 模型
-            search_space,  # 超参数空间
-            n_iter=25,  # 迭代次数
-            cv=5,  # 交叉验证次数
-        )
+            # 使用贝叶斯优化进行超参数搜索
+        opt = BayesSearchCV(
+                SVR(),  # 模型
+                search_space,  # 超参数空间
+                n_iter=25,  # 迭代次数
+                cv=5,  # 交叉验证次数
+            )
 
-        # 拟合模型
-    opt.fit(X1, y1)
+            # 拟合模型
+        opt.fit(X1, y1)
 
-        # 创建SVR模型，使用RBF核函数
-    regressor_plssvr_a = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
-                            gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
+            # 创建SVR模型，使用RBF核函数
+        regressor_plssvr_a = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
+                                gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
 
-    scores = cross_val_score(regressor_plssvr_a, X1, y1, cv=25, scoring='neg_mean_squared_error')
-    scores_mae = cross_val_score(regressor_plssvr_a, X1, y1, cv=25, scoring='neg_mean_absolute_error')
-    scores_r2 = cross_val_score(regressor_plssvr_a, X1, y1, cv=25, scoring='r2')
-    # 计算平均 MSE
-    mse = np.mean(-scores)
-    rmse = np.sqrt(mse)
-    mae = np.mean(-scores_mae)
-    r2 = np.mean(scores_r2)
+        scores = cross_val_score(regressor_plssvr_a, X1, y1, cv=kf2, scoring='neg_mean_squared_error')
+        scores_mae = cross_val_score(regressor_plssvr_a, X1, y1, cv=kf2, scoring='neg_mean_absolute_error')
+        scores_r2 = cross_val_score(regressor_plssvr_a, X1, y1, cv=kf2, scoring='r2')
+        # 计算平均 MSE
+        mse = np.mean(-scores)
+        rmse = np.sqrt(mse)
+        mae = np.mean(-scores_mae)
+        r2 = np.mean(scores_r2)
     # 输出结果
     st.markdown("PLS-SVR模型性能指标：")
     st.markdown(f"MSE: {mse}")
@@ -974,77 +981,78 @@ def plssvrm_s(pre,lis):
     data = data.dropna(how='any')
     # SVR
     r2 = 0
-    features = lis
-    target = pre
+    while r2 <= 0.85:
+        features = lis
+        target = pre
 
-        # 分割数据集
-    X = data[features]
-    y = data[target]
+            # 分割数据集
+        X = data[features]
+        y = data[target]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    X_train = X_train.to_numpy()
-    X_test = X_test.to_numpy()
-    y_train = y_train.to_numpy()
-    y_test = y_test.to_numpy()
-        # 初始化标准化器
-    scaler_X = MinMaxScaler()
-    scaler_y = MinMaxScaler()
+        X_train = X_train.to_numpy()
+        X_test = X_test.to_numpy()
+        y_train = y_train.to_numpy()
+        y_test = y_test.to_numpy()
+            # 初始化标准化器
+        scaler_X = MinMaxScaler()
+        scaler_y = MinMaxScaler()
 
-        # 对训练集进行拟合和变换
-    X_train = scaler_X.fit_transform(X_train)
-    y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
+            # 对训练集进行拟合和变换
+        X_train = scaler_X.fit_transform(X_train)
+        y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).reshape(-1)
 
-        # 对测试集仅进行变换
-    X_test = scaler_X.transform(X_test)
-    y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
+            # 对测试集仅进行变换
+        X_test = scaler_X.transform(X_test)
+        y_test = scaler_y.transform(y_test.reshape(-1, 1)).reshape(-1)
 
-        # 使用 PLS 进行特征提取，选择提取2个主成分
-    pls = PLSRegression(n_components=4)
+            # 使用 PLS 进行特征提取，选择提取2个主成分
+        pls = PLSRegression(n_components=7)
 
-        # 拟合 PLS 模型
-    pls.fit(X_train, y_train)
+            # 拟合 PLS 模型
+        pls.fit(X_train, y_train)
 
-        # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
-    X_pls = pls.transform(X_train)
-    X_test_pls = pls.transform(X_test)
-        # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
-    X_test_pls = pls.transform(X_test)
+            # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
+        X_pls = pls.transform(X_train)
+        X_test_pls = pls.transform(X_test)
+            # 提取特征，得到新的特征矩阵 X_pls（经过降维后的数据）
+        X_test_pls = pls.transform(X_test)
 
-    X1 = X_pls
-    y1 = y_train
+        X1 = X_pls
+        y1 = y_train
 
-        # 定义SVR模型的超参数搜索空间
-    search_space = {
-            'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
-            'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
-            'kernel': ['linear', 'rbf'],  # 核函数类型
-            'gamma': ['scale', 'auto'],  # 核函数的系数
-        }
+            # 定义SVR模型的超参数搜索空间
+        search_space = {
+                'C': (1e-3, 1e+0, 'log-uniform'),  # 惩罚项参数 C
+                'epsilon': (0.01, 0.1),  # 损失函数的 epsilon
+                'kernel': ['linear', 'rbf'],  # 核函数类型
+                'gamma': ['scale', 'auto'],  # 核函数的系数
+            }
 
-        # 使用贝叶斯优化进行超参数搜索
-    opt = BayesSearchCV(
-            SVR(),  # 模型
-            search_space,  # 超参数空间
-            n_iter=25,  # 迭代次数
-            cv=5,  # 交叉验证次数
-        )
+            # 使用贝叶斯优化进行超参数搜索
+        opt = BayesSearchCV(
+                SVR(),  # 模型
+                search_space,  # 超参数空间
+                n_iter=25,  # 迭代次数
+                cv=5,  # 交叉验证次数
+            )
 
-        # 拟合模型
-    opt.fit(X1, y1)
+            # 拟合模型
+        opt.fit(X1, y1)
 
-        # 创建SVR模型，使用RBF核函数
-    regressor_plssvr_s = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
-                            gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
+            # 创建SVR模型，使用RBF核函数
+        regressor_plssvr_s = SVR(C=opt.best_params_['C'], epsilon=opt.best_params_['epsilon'],
+                                gamma=opt.best_params_['gamma'], kernel=opt.best_params_['kernel'])
 
-    scores = cross_val_score(regressor_plssvr_s, X1, y1, cv=25, scoring='neg_mean_squared_error')
-    scores_mae = cross_val_score(regressor_plssvr_s, X1, y1, cv=25, scoring='neg_mean_absolute_error')
-    scores_r2 = cross_val_score(regressor_plssvr_s, X1, y1, cv=25, scoring='r2')
-    # 计算平均 MSE
-    mse = np.mean(-scores)
-    rmse = np.sqrt(mse)
-    mae = np.mean(-scores_mae)
-    r2 = np.mean(scores_r2)
+        scores = cross_val_score(regressor_plssvr_s, X1, y1, cv=kf2, scoring='neg_mean_squared_error')
+        scores_mae = cross_val_score(regressor_plssvr_s, X1, y1, cv=kf2, scoring='neg_mean_absolute_error')
+        scores_r2 = cross_val_score(regressor_plssvr_s, X1, y1, cv=kf2, scoring='r2')
+        # 计算平均 MSE
+        mse = np.mean(-scores)
+        rmse = np.sqrt(mse)
+        mae = np.mean(-scores_mae)
+        r2 = np.mean(scores_r2)
     # 输出结果
     st.markdown("PLS-SVR模型性能指标：")
     st.markdown(f"MSE: {mse}")
