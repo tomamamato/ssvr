@@ -1279,6 +1279,7 @@ def xd77():
 
 st.title("基于SVR的生物过程预测")
 # 创建一个按钮
+st.write(4.0)
 if st.button('说明书'):
     # 当按钮被点击时，显示一个带有换行的文字内容
     with st.expander("基于SVR的生物过程预测使用说明书"):
