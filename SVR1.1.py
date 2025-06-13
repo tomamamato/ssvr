@@ -25,7 +25,7 @@ pls_a_n=5
 pls_s_n=7
 pre1='下一产物'#预测目标
 pre2='下一底物'#预测目标
-kk=[]
+options_mpc_0=[]
 @st.cache_data
 def xd0():#添加发酵时间
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
