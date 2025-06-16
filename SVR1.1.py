@@ -976,7 +976,7 @@ def xd22():#添加变化特征
     for sheet_name in xls.sheet_names:
         # 读取每个sheet
         df = xls.parse(sheet_name)
-        for col in range(n1, n3):
+        for col in range(m1, n3):
             df[f'变化率_{df.columns[col]}'] = df.iloc[:, col] / df['发酵时间']
         processed_sheets[sheet_name] = df
     with pd.ExcelWriter(file_out_in) as writer:
@@ -1136,6 +1136,8 @@ if st.button('说明书'):
         st.markdown("5. 注意事项")
         st.markdown("在进行模型训练、特征抽提等需要较长时间的操作时，请耐心等待，避免频繁操作导致系统不稳定")
         st.markdown("本系统仅适用于符合规定格式的训练数据，上传的数据应严格按照说明书中要求的格式进行整理")
+        st.markdown("6. 版权说明")
+        st.markdown("孙展鵾 李友元(yyli@ecust.edu.cn) * 华东理工大学生物工程学院 Copyright 2025")
 
 st.header("1.文件读取")
 # 文件上传
@@ -1397,6 +1399,7 @@ if st.button('清理缓存'):
     st.write("缓存已清理！")
 
 
+st.markdown("版权说明： 孙展鵾 李友元(yyli@ecust.edu.cn) * 华东理工大学生物工程学院 Copyright 2025")
 
 
 
