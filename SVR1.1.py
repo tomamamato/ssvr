@@ -32,6 +32,7 @@ def xd0():#添加发酵时间
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
     xls = pd.ExcelFile(excel_file)
     df = pd.read_excel(xls)
+    st.write(df)
     columns = df.columns.tolist()
     n1 = len(columns)+1
     # 创建ExcelWriter对象以保存结果
@@ -46,13 +47,13 @@ def xd0():#添加发酵时间
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     file_out.seek(0)
-    st.write(df)
     return n1
 
 @st.cache_data
 def xd1():#添加变化特征
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
+    st.write(df)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
     # 获取当前sheet的所有列名
