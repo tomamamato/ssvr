@@ -1182,6 +1182,9 @@ if 'b' in st.session_state:
     n1 = xd0()
     if '变化特征' in options :
         xd1()
+        xls = pd.ExcelFile(file_out)
+        df2 = pd.read_excel(xls)
+        st.write(df2)
     if '变化率特征' in options :
         xd2()
     if '时序特征' in options :
