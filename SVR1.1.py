@@ -67,8 +67,6 @@ def xd1():#添加变化特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
-    pathh=file_out.name
-    st.write("{pathh}")
     st.success("已拓展“变化”特征")
 
 @st.cache_data
