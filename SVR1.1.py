@@ -17,8 +17,8 @@ from sklearn.cross_decomposition import PLSRegression
 from scipy.optimize import minimize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import r2_score, make_scorer
-file_out="/tmp/d3.xlsx"#训练数据预处理后保存地址
-file_out_in='/tmp/d4.xlsx'#预测数据预处理后保存地址
+file_out="d3.xlsx"#训练数据预处理后保存地址
+file_out_in='d4.xlsx'#预测数据预处理后保存地址
 kf1=25#特征抽提时SVR交叉验证折数
 kf2=2#模型训练时SVR交叉验证折数
 pls_a_n=5
@@ -48,7 +48,7 @@ def xd0():#添加发酵时间
 
 @st.cache_data
 def xd1():#添加变化特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -71,7 +71,7 @@ def xd1():#添加变化特征
 
 @st.cache_data
 def xd2():#添加变化率特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -92,7 +92,7 @@ def xd2():#添加变化率特征
 
 @st.cache_data
 def xd3():#添加时序特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -114,7 +114,7 @@ def xd3():#添加时序特征
 
 @st.cache_data
 def xd4():#添加多项式特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -136,7 +136,7 @@ def xd4():#添加多项式特征
 
 @st.cache_data
 def xd5():#添加累积特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -159,7 +159,7 @@ def xd5():#添加累积特征
 
 @st.cache_data
 def xd6():#添加转化率特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -183,7 +183,7 @@ def xd6():#添加转化率特征
 
 @st.cache_data
 def xd7():#添加生物学特征
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -206,7 +206,7 @@ def xd7():#添加生物学特征
 
 @st.cache_data
 def xd8():#添加预测目标
-    xls = pd.ExcelFile(file_out, engine="openpyxl")
+    xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
