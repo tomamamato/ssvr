@@ -48,7 +48,7 @@ def xd0():#添加发酵时间
 
 @st.cache_data
 def xd1():#添加变化特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -71,7 +71,7 @@ def xd1():#添加变化特征
 
 @st.cache_data
 def xd2():#添加变化率特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -92,7 +92,7 @@ def xd2():#添加变化率特征
 
 @st.cache_data
 def xd3():#添加时序特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -114,7 +114,7 @@ def xd3():#添加时序特征
 
 @st.cache_data
 def xd4():#添加多项式特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -136,7 +136,7 @@ def xd4():#添加多项式特征
 
 @st.cache_data
 def xd5():#添加累积特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -159,7 +159,7 @@ def xd5():#添加累积特征
 
 @st.cache_data
 def xd6():#添加转化率特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -183,7 +183,7 @@ def xd6():#添加转化率特征
 
 @st.cache_data
 def xd7():#添加生物学特征
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
@@ -206,7 +206,7 @@ def xd7():#添加生物学特征
 
 @st.cache_data
 def xd8():#添加预测目标
-    xls = pd.ExcelFile(file_out)
+    xls = pd.ExcelFile(file_out, engine="openpyxl")
     df = pd.read_excel(xls)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
