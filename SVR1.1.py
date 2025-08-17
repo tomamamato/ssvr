@@ -45,6 +45,7 @@ def xd0():#添加发酵时间
             for new_col, base_col in change_columns.items():
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     return n1
 
 @st.cache_data
@@ -68,6 +69,7 @@ def xd1():#添加变化特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“变化”特征")
 
 @st.cache_data
@@ -89,6 +91,7 @@ def xd2():#添加变化率特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“变化率”特征")
 
 @st.cache_data
@@ -111,6 +114,7 @@ def xd3():#添加时序特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“时序”特征")
 
 @st.cache_data
@@ -133,6 +137,7 @@ def xd4():#添加多项式特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“多项式”特征")
 
 @st.cache_data
@@ -156,6 +161,7 @@ def xd5():#添加累积特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“累积”特征")
 
 @st.cache_data
@@ -181,6 +187,7 @@ def xd6():#添加转化率特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
 
 @st.cache_data
 def xd7():#添加生物学特征
@@ -203,6 +210,7 @@ def xd7():#添加生物学特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
     st.success("已拓展“生物学”特征")
 
 @st.cache_data
@@ -224,6 +232,7 @@ def xd8():#添加预测目标
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    file_out.seek(0)
 
 @st.cache_data
 def xd9():#多个sheet合并
@@ -252,6 +261,7 @@ def xd9():#多个sheet合并
         input_path = file_out  # 输入文件路径
         output_path = file_out  # 输出文件路径
         merge_sheets(input_path, output_path)
+    file_out.seek(0)
 
 @st.cache_data
 def fscore1_a(pre):#产物预测：计算f-score值
