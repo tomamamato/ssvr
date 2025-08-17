@@ -32,7 +32,7 @@ def xd0():#添加发酵时间
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
     xls = pd.ExcelFile(excel_file)
     df = pd.read_excel(xls)
-    st.write(df.head())
+    st.write('asdfghdfh')
     columns = df.columns.tolist()
     n1 = len(columns)+1
     # 创建ExcelWriter对象以保存结果
