@@ -44,6 +44,7 @@ def xd0():#添加发酵时间
             for new_col, base_col in change_columns.items():
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    st.write(1233)
     return n1
 
 @st.cache_data
@@ -67,7 +68,6 @@ def xd1():#添加变化特征
     with pd.ExcelWriter(file_out) as writer:
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
-    st.write("123")
     st.success("已拓展“变化”特征")
 
 @st.cache_data
