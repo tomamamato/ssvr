@@ -599,7 +599,8 @@ def fscore_s(pre,lis1):#底物预测：二分法特征抽提
 
 @st.cache_data
 def svrm_a(pre,lis):#底物预测SVR模型
-    data = pd.read_excel(uploaded_file_1, engine='openpyxl')  # 读取
+    file_path = uploaded_file_1
+    data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -675,7 +676,8 @@ def svrm_a(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def svrm_s(pre,lis):#底物预测SVR模型
-    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
+    file_path = uploaded_file_1
+    data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -750,7 +752,8 @@ def svrm_s(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
-    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
+    file_path = uploaded_file_1
+    data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -834,7 +837,8 @@ def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
 
 @st.cache_data
 def plssvrm_s(pre,lis):#底物预测PLS-SVR模型
-    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
+    file_path = uploaded_file_1
+    data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -1405,6 +1409,10 @@ if st.button('清理缓存'):
     st.write("缓存已清理！")
 
 st.markdown("版权说明： 孙展鵾 李友元(yyli@ecust.edu.cn) * 华东理工大学生物工程学院 Copyright 2025")#作者 版权说明
+
+
+
+
 
 
 
