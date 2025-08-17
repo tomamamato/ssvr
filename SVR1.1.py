@@ -68,6 +68,7 @@ def xd1():#添加变化特征
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     st.success("已拓展“变化”特征")
+    st.write(file_out)
 
 @st.cache_data
 def xd2():#添加变化率特征
@@ -1196,6 +1197,7 @@ if 'b' in st.session_state:
         xd7()
     xd8()
     xd9()
+    st.write(file_out)
     xls = pd.ExcelFile(file_out)
     df2 = pd.read_excel(xls)
     if st.button('处理数据预览'):
