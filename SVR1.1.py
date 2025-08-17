@@ -17,7 +17,7 @@ from sklearn.cross_decomposition import PLSRegression
 from scipy.optimize import minimize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import r2_score, make_scorer
-file_out="/app/d3.xlsx"#训练数据预处理后保存地址
+file_out="/app/d3sszzkk.xlsx"#训练数据预处理后保存地址
 file_out_in='/app/d4.xlsx'#预测数据预处理后保存地址
 kf1=25#特征抽提时SVR交叉验证折数
 kf2=2#模型训练时SVR交叉验证折数
