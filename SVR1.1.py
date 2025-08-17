@@ -599,7 +599,7 @@ def fscore_s(pre,lis1):#底物预测：二分法特征抽提
 
 @st.cache_data
 def svrm_a(pre,lis):#底物预测SVR模型
-    data = pd.read_excel(fuploaded_file_1, engine='openpyxl')  # 读取
+    data = pd.read_excel(uploaded_file_1, engine='openpyxl')  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -675,7 +675,7 @@ def svrm_a(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def svrm_s(pre,lis):#底物预测SVR模型
-    data = pd.read_excel(fuploaded_file_1, engine='openpyxl')
+    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -750,7 +750,7 @@ def svrm_s(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
-    data = pd.read_excel(fuploaded_file_1, engine='openpyxl')
+    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
@@ -834,7 +834,7 @@ def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
 
 @st.cache_data
 def plssvrm_s(pre,lis):#底物预测PLS-SVR模型
-    data = pd.read_excel(fuploaded_file_1, engine='openpyxl')
+    data = pd.read_excel(uploaded_file_1, engine='openpyxl')
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
     features = lis
