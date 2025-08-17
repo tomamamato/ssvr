@@ -46,14 +46,12 @@ def xd0():#添加发酵时间
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     file_out.seek(0)
-    st.write(n1)
     return n1
 
 @st.cache_data
 def xd1():#添加变化特征
     xls = pd.ExcelFile(file_out)
     df = pd.read_excel(xls)
-    st.write(df)
     # 新建一个字典存储处理后的每个sheet
     processed_sheets = {}
     # 获取当前sheet的所有列名
@@ -1207,7 +1205,6 @@ if st.button('开始拓展'):
 if 'b' in st.session_state:
     # 添加发酵时间
     n1 = xd0()
-    st.write(n1)
     if '变化特征' in options :
         xd1()
     if '变化率特征' in options :
