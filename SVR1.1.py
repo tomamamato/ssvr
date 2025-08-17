@@ -32,7 +32,6 @@ def xd0():#添加发酵时间
     excel_file = pd.ExcelFile(uploaded_file, engine="openpyxl")
     xls = pd.ExcelFile(excel_file)
     df = pd.read_excel(xls)
-    st.write('asdfghdfh')
     columns = df.columns.tolist()
     n1 = len(columns)+1
     # 创建ExcelWriter对象以保存结果
@@ -47,6 +46,7 @@ def xd0():#添加发酵时间
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
     file_out.seek(0)
+    st.write(n1)
     return n1
 
 @st.cache_data
@@ -1207,6 +1207,7 @@ if st.button('开始拓展'):
 if 'b' in st.session_state:
     # 添加发酵时间
     n1 = xd0()
+    st.write(n1)
     if '变化特征' in options :
         xd1()
     if '变化率特征' in options :
