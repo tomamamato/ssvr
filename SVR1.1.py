@@ -44,7 +44,6 @@ def xd0():#添加发酵时间
             for new_col, base_col in change_columns.items():
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
-    st.write(1233)
     return n1
 
 @st.cache_data
