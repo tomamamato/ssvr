@@ -17,8 +17,9 @@ from sklearn.cross_decomposition import PLSRegression
 from scipy.optimize import minimize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import r2_score, make_scorer
-file_out="/app/d3sszzkk.xlsx"#训练数据预处理后保存地址
-file_out_in='/app/d4.xlsx'#预测数据预处理后保存地址
+from io import BytesIO
+file_out=BytesIO()#训练数据预处理后保存地址
+file_out_in=BytesIO()#预测数据预处理后保存地址
 kf1=25#特征抽提时SVR交叉验证折数
 kf2=2#模型训练时SVR交叉验证折数
 pls_a_n=5
@@ -34,7 +35,7 @@ def xd0():#添加发酵时间
     columns = df.columns.tolist()
     n1 = len(columns)+1
     # 创建ExcelWriter对象以保存结果
-    with pd.ExcelWriter(file_out) as writer:
+    with pd.ExcelWriter(file_out, engine='openpyxl') as writer:
         # 遍历每个sheet
         for sheet_name in excel_file.sheet_names:
             df = pd.read_excel(excel_file, sheet_name=sheet_name, header=0, index_col=None)
@@ -255,7 +256,7 @@ def xd9():#多个sheet合并
 @st.cache_data
 def fscore1_a(pre):#产物预测：计算f-score值
     # 读取Excel文件
-    df = pd.read_excel(file_out, engine='openpyxl')
+    df = pd.read_excel(uploaded_file_1, engine='openpyxl')
     df = df[~df.isna().any(axis=1)]
     # 提取目标变量y
     y = df[pre]
@@ -286,7 +287,7 @@ def fscore1_a(pre):#产物预测：计算f-score值
 def fscore_a(pre,lis1):#产物预测：二分法特征抽提
     lis = [item[0] for item in lis1]
     # 读取Excel文件中的所有sheet
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值样本点
     #最高分数特征
@@ -427,7 +428,7 @@ def fscore_a(pre,lis1):#产物预测：二分法特征抽提
 @st.cache_data
 def fscore1_s(pre):#底物预测：计算f-score值
     # 读取Excel文件
-    df = pd.read_excel(file_out, engine='openpyxl')
+    df = pd.read_excel(uploaded_file_1, engine='openpyxl')
     df = df[~df.isna().any(axis=1)]
     # 提取目标变量y
     y = df[pre]
@@ -459,7 +460,7 @@ def fscore1_s(pre):#底物预测：计算f-score值
 def fscore_s(pre,lis1):#底物预测：二分法特征抽提
     lis = [item[0] for item in lis1]
     # 读取Excel文件中的所有sheet
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # 最高分数特征
@@ -598,7 +599,7 @@ def fscore_s(pre,lis1):#底物预测：二分法特征抽提
 
 @st.cache_data
 def svrm_a(pre,lis):#底物预测SVR模型
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
@@ -675,7 +676,7 @@ def svrm_a(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def svrm_s(pre,lis):#底物预测SVR模型
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
@@ -751,7 +752,7 @@ def svrm_s(pre,lis):#底物预测SVR模型
 
 @st.cache_data
 def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
@@ -836,7 +837,7 @@ def plssvrm_a(pre,lis):#产物预测PLS-SVR模型
 
 @st.cache_data
 def plssvrm_s(pre,lis):#底物预测PLS-SVR模型
-    file_path = file_out
+    file_path = uploaded_file_1
     data = pd.read_excel(file_path)  # 读取
     data = data.dropna(how='any')#删除包含空值的样本点
     # SVR
@@ -1094,6 +1095,15 @@ def xd77():#添加生物学特征
         for sheet_name, df in processed_sheets.items():
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
+@st.cache_data
+def xd88():
+    excel_file2 = pd.ExcelFile(file_out_in, engine="openpyxl")
+    xls2 = pd.ExcelFile(excel_file2)
+    df22 = pd.read_excel(xls2)
+    prdata = df22.iloc[-1]  # 提取最后一行（待预测数据）
+    st.write(prdata)
+    return df22,prdata
+
 st.title("基于SVR的生物过程预测")
 # 创建一个按钮
 if st.button('说明书'):
@@ -1196,16 +1206,20 @@ if 'b' in st.session_state:
         xd7()
     xd8()
     xd9()
-    xls = pd.ExcelFile(file_out)
-    df2 = pd.read_excel(xls)
-    if st.button('处理数据预览'):
-        st.session_state.aa = 'aa'
-    # 显示结果
-    if 'aa' in st.session_state:
-        st.subheader('数据预览')
-        st.write(df2.head(20))
+
+    st.session_state.processed_excel = file_out.getvalue()
+    st.download_button(
+        label="📥 立即下载修改后的 Excel 文件",
+        data=st.session_state.processed_excel,
+        file_name="预处理后训练数据.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        key="download_button"
+    )
 
 st.header("3.特征抽提")
+
+uploaded_file_1 = st.file_uploader("选择处理好的训练数据文件", type=["xlsx", "xls"],key="file_uploader_1")
+
 if st.button('开始特征抽提'):
     st.session_state.c = 'c'
 if 'c' in st.session_state:
@@ -1247,7 +1261,7 @@ if 'e' in st.session_state:#底物预测模型
 
 st.header("5.预测")
 # 文件上传
-uploaded_file1 = st.file_uploader("选择一个 Excel 文件", type=["xlsx", "xls"],key="file_uploader_1")
+uploaded_file1 = st.file_uploader("选择一个 Excel 文件", type=["xlsx", "xls"],key="file_uploader_2")
 # 如果用户上传了文件
 if uploaded_file1 is not None:
     # 文件读取
@@ -1276,11 +1290,7 @@ if uploaded_file1 is not None:
             xd66()
         if '生物学特征' in options :
             xd77()
-        excel_file2 = pd.ExcelFile(file_out_in, engine="openpyxl")
-        xls2 = pd.ExcelFile(excel_file2)
-        df22 = pd.read_excel(xls2)
-        prdata = df22.iloc[-1]#提取最后一行（待预测数据）
-        st.write(prdata)
+        df22,prdata=xd88()
 
 if st.button('开始预测产物'):
     st.session_state.g = 'g'
@@ -1399,6 +1409,9 @@ if st.button('清理缓存'):
     st.write("缓存已清理！")
 
 st.markdown("版权说明： 孙展鵾 李友元(yyli@ecust.edu.cn) * 华东理工大学生物工程学院 Copyright 2025")#作者 版权说明
+
+
+
 
 
 
