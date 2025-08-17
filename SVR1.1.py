@@ -1196,7 +1196,6 @@ if 'b' in st.session_state:
         xd7()
     xd8()
     xd9()
-    st.write(file_out)
     xls = pd.ExcelFile(file_out)
     df2 = pd.read_excel(xls)
     if st.button('处理数据预览'):
