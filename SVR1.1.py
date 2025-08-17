@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -18,7 +19,7 @@ from scipy.optimize import minimize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import r2_score, make_scorer
 from io import BytesIO
-file_out=BytesIO()#训练数据预处理后保存地址
+file_out='d3.xlsx'#训练数据预处理后保存地址
 file_out_in=BytesIO()#预测数据预处理后保存地址
 kf1=25#特征抽提时SVR交叉验证折数
 kf2=2#模型训练时SVR交叉验证折数
@@ -45,6 +46,7 @@ def xd0():#添加发酵时间
             for new_col, base_col in change_columns.items():
                 df[new_col] = df[base_col].diff()
             df.to_excel(writer, sheet_name=sheet_name, index=False)
+    
     file_out.seek(0)
     return n1
 
